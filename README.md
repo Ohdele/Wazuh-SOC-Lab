@@ -60,3 +60,45 @@ The issues were resolved by retrieving the required credentials and certificates
 ## Operational Impact
 
 The deployment establishes a functional centralized SIEM foundation with reliable archive telemetry, improving security visibility and providing a validated platform for subsequent endpoint monitoring and detection capabilities.
+
+---
+
+
+# Part 2: Windows & Ubuntu Agents + Sysmon
+
+- **Objective:** 
+Extend centralized security monitoring by onboarding Windows and Linux endpoints and integrating Sysmon to reduce blind spots in process and network activity.
+
+- **Scope & Assumptions:** 
+Lab simulation with two Windows endpoints (DC1, WS01), 2 Ubuntu endpoints (DFIR‑Linux), and a Wazuh server from Part 1 for centralized monitoring.
+
+- **Skills:** 
+SIEM administration | endpoint telemetry deployment | Windows/Linux administration | security monitoring | log analysis | troubleshooting | evidence validation | security documentation.
+
+- **Tools:** 
+Wazuh Manager/Dashboard for centralized monitoring | Wazuh Agents for endpoint collection | Microsoft Sysmon for deeper telemetry | SSH/PowerShell for deployment | VirtualBox for lab environment.
+
+- **Steps:**
+
+<img src="02_Screenshots/Wazuh_Agent_Coverage.png">
+
+**Agent Deployment & Coverage:** Enrolled DC1, WS01, and DFIR-Linux into Wazuh and verified centralized telemetry from all monitored systems.
+
+<img src="02_Screenshots/DC1-WS01-Linux-active-agents.png">
+
+**Windows Sysmon Integration:** Configured Wazuh to collect the Sysmon Operational channel from DC1 and WS01 and verified Sysmon process and network telemetry in the archive.
+
+**Linux Sysmon Integration:** Installed Sysmon for Linux on DFIR-Linux, applied the `collect-all.xml` configuration, and verified Sysmon events were written to `/var/log/syslog` and forwarded to Wazuh.
+
+**Telemetry Validation:** Executed `uname` on DFIR-Linux and confirmed Wazuh captured the activity as a Linux Sysmon event with `/usr/bin/uname` as the process image.
+
+- **Challenges & Troubleshooting:** 
+Windows Sysmon telemetry required explicit `ossec.conf` configuration before events appeared, and restarting the Wazuh Agent resolved the issue; Linux Sysmon required installation and local log validation before telemetry was confirmed in Wazuh.
+
+- **Summary:**
+  - **Investigation Findings:** Wazuh archive confirmed telemetry from all endpoints systems—DC1, WS01, DFIR-Linux, and ubuntu-s2—with Sysmon process and network events.
+  - **Security Decision:** Sysmon was added to strengthen endpoint visibility and support deeper investigations.
+  - **Validation:** Wazuh Discover confirmed active agent coverage and successful Sysmon telemetry, including the captured Linux `uname` execution.
+
+- **Operational Impact:** 
+Centralized Sysmon telemetry improved endpoint visibility and strengthened incident-response readiness.
