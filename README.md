@@ -133,34 +133,34 @@ Conducted in a controlled lab using DeleDFIR.local AD, WS01, and Ubuntu endpoint
 ### Event ID 4726 — Account Deletion
 <img src="03_Screenshots/WS01_4726.png">
 
-The **Subject**, identified by **RID 500**, was the **Administrator account** that executed the action, while the **Target Account**, identified by **RID 1012**, was the **`student1` account**. By parsing the **Subject SID** and correlating the RID, I confirmed the actor as **Administrator**. I then correlated this event with the controlled **deletion of `student1` on WS01** in the **DELEDFIR domain**, validating that the activity matched the expected lab simulation.
+The **Subject**, identified by **RID 500**, was the Administrator account that executed the action, while the **Target Account**, identified by **RID 1012**, was the `student1` account. By parsing the **Subject SID** and correlating the RID, I confirmed the actor as **Administrator**. I then correlated this event with the controlled deletion of `student1` on WS01 in the **DELEDFIR domain**, validating that the activity matched the expected lab simulation.
 
 ### Event ID 4720 — Account Creation
 <img src="03_Screenshots/WS01_4720.png">
 
-Interpreted **Event ID 4720** as a **user-account creation event**, identified the **Subject (RID 500)** as the account that performed the action and the **New Account (RID 1012)** as the account created, parsed the **Subject SID** and used the RID to identify the **Administrator account**, reviewed the account attributes including **Primary Group ID `513`** as **Domain Users** and **New UAC Value `0x15`** as indicating **Account Disabled, Password Not Required, and Normal Account**, and correlated the event with the controlled **`student1` account creation** performed on **WS01** in the **DELEDFIR domain**.
+Interpreted **Event ID 4720** as a user-account creation event, identified the **Subject (RID 500)** as the account that performed the action and the **New Account (RID 1012)** as the account created, parsed the **Subject SID** and used the RID to identify the **Administrator account**, reviewed the account attributes including Primary Group ID `513` as **Domain Users** and New UAC Value `0x15` as indicating Account Disabled, Password Not Required, and Normal Account, and correlated the event with the controlled `student1` account creation performed on WS01 in the **DELEDFIR domain**.
 
 ### Event ID 4624 — Successful Logon
 <img src="03_Screenshots/WS01_4624.png">
 
-Interpreted **Event ID 4624** as a **successful user logon**, identified the **New Logon** account as **`DELEDFIR\john.smith`** and **RID `1239`** as the relative identifier at the end of the account SID, identified **Logon Type `7`** as a **re-logon/unlock event**, reviewed **Logon ID `0x87E1C9`** as a correlation point for the logon session, identified **`lsass.exe`** as the process handling the authentication and **Negotiate** as the authentication package, and correlated the logon with **WS01** and the **DELEDFIR domain**.
+Interpreted **Event ID 4624** as a successful user logon, identified the New Logon account as **`DELEDFIR\john.smith`** and **RID 1239** as the relative identifier at the end of the account SID, identified Logon Type `7` as a re-logon/unlock event, reviewed Logon ID `0x87E1C9` as a correlation point for the logon session, identified **`lsass.exe`** as the process handling the authentication and Negotiate as the authentication package, and correlated the logon with WS01 and the **DELEDFIR domain**.
 
 ### Event ID 4732 — Local Group Membership
 <img src="03_Screenshots/WS01_4732.png">
 
-Interpreted **Event ID 4732** as a **member being added to a security-enabled local group**, identified the **Subject (RID 500)** as the account that performed the action and the **Member (RID 1012)** as the account added, used the **Member SID/RID** to identify the affected account as **`student1`** because the Member **Account Name** field was not populated, identified the target local group as **Users** in the **`Builtin` domain**, and correlated the event with the controlled **`student1` group-membership change** performed on **WS01** by **`DELEDFIR\Administrator`**.
+Interpreted **Event ID 4732** as a member being added to a security-enabled local group, identified the **Subject (RID 500)** as the account that performed the action and the **Member (RID 1012)** as the account added, used the **Member SID/RID** to identify the affected account as **`student1`** because the Member **Account Name** field was not populated, identified the target local group as Users in the Builtin domain, and correlated the event with the controlled `student1` group-membership change performed on WS01 by `DELEDFIR\Administrator`.
 
 ### Linux SSH Authentication
 
 <img src="03_Screenshots/SSH_Session_opened.png">
 
-Identified a **connection reset by invalid user** for **`fakeuser`** from **`192.168.56.1`** on port **`52603`**, identified a **failed password attempt** for `fakeuser` from the same source IP and port, searched for **`dfir AND accepted`** and identified a successful SSH authentication for **`dfir`** from **`192.168.56.1`** on port **`52395`**, and interpreted the **Accepted password** event as successful authentication.
+Identified a **connection reset by invalid user** for `fakeuser` from 192.168.56.1  on port `52603`, identified a **failed password attempt** for fakeuser from the same source IP and port, searched for `dfir AND accepted` and identified a successful SSH authentication for **`dfir`** from 192.168.56.1 on port **`52395`**, and interpreted the **Accepted password** event as successful authentication.
 
 ### Linux SSH Session Lifecycle
 
 <img src="03_Screenshots/SSH_Session_Closed.png">
 
-Searched for **`dfir AND session`** to investigate the SSH session lifecycle, confirmed the session was established through the **`pam_unix(sshd:session): session opened`** event, used the shared **`sshd` process ID `2345`** to correlate the session-open and session-close events, and confirmed the SSH session started at **`02:37:59`** and closed at **`02:57:08`**.
+Searched for **`dfir AND session`** to investigate the SSH session lifecycle, confirmed the session was established through the pam_unix(sshd:session): session opened event, used the shared **`sshd` process ID `2345`** to correlate the session-open and session-close events, and confirmed the SSH session started at **`02:37:59`** and closed at **`02:57:08`**.
 
 
 ## Challenges & Troubleshooting
