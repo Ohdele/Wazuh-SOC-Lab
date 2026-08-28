@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project builds an on-premises Wazuh SIEM environment to develop practical SOC analyst experience through centralized security monitoring across Windows and Linux endpoints within the existing **DeleDFIR.local Active Directory lab**. The environment covers Wazuh server and Dashboard deployment, endpoint telemetry collection and validation, custom dashboards and detection rules, File Integrity Monitoring (FIM), Active Response, and end-to-end security investigations. The lab is being developed as a repeatable SOC environment that can be extended with additional detections, threat simulations, investigations, and automation through **Tines, AI, Slack, and human-approved blocking workflows**.
+This project builds an on-premises Wazuh SIEM to develop SOC analyst skills through centralized monitoring of Windows and Linux endpoints. It integrates with the **DeleDFIR.local Active Directory** domain and Ubuntu systems to generate and analyze security telemetry. The lab covers Wazuh server and dashboard deployment, telemetry validation, custom detection rules, File Integrity Monitoring, Active Response, and full security investigations. Designed as a repeatable SOC environment, it can be extended with detections, threat simulations, investigations, and automation using **Tines, AI, Slack, and human-approved blocking workflows**.
 
 ---
 
@@ -112,7 +112,8 @@ Centralized Sysmon telemetry improved endpoint visibility and strengthened incid
 Simulate Windows/Linux security events and analyze Wazuh telemetry to demonstrate detection and correlation of authentication, account changes, group membership modifications, and SSH activity, with risk assessment applied.
 
 ## Scope & Assumptions
-Conducted in a controlled lab using DeleDFIR.local AD, WS01, and Ubuntu endpoint. Wazuh served as the centralized monitoring platform for telemetry collection and analysis.
+
+Conducted in a controlled lab using the existing **DeleDFIR.local Active Directory environment (DC1 and WS01)** and an **Ubuntu endpoint**. Wazuh served as the centralized monitoring platform for telemetry collection and analysis.
 
 ## Skills
 - SIEM log analysis & correlation
