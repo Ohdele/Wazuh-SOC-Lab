@@ -18,13 +18,11 @@ This is a controlled VirtualBox lab extending the existing DeleDFIR.local Active
 
 ## Skills
 
-- SIEM deployment and administration
-- Linux system administration
-- Security monitoring, telemetry collection, and validation
-- Troubleshooting and configuration management
-- Service health validation
-- Evidence-based technical analysis
-- SOC documentation
+- SIEM deployment & administration
+- Linux administration & troubleshooting
+- Security monitoring & telemetry validation
+- Service health & configuration management
+- Evidence-based analysis & SOC documentation
 
 ## Tools
 
@@ -73,10 +71,16 @@ Extend centralized security monitoring by onboarding Windows and Linux endpoints
 Lab simulation with two Windows endpoints (DC1, WS01), 2 Ubuntu endpoints (DFIR‑Linux), and a Wazuh server from Part 1 for centralized monitoring.
 
 - **Skills:** 
-SIEM administration | endpoint telemetry deployment | Windows/Linux administration | security monitoring | log analysis | troubleshooting | evidence validation | security documentation.
+- SIEM administration & endpoint telemetry
+- Windows/Linux administration & security monitoring
+- Log analysis, troubleshooting & evidence validation
+- SOC documentation
 
-- **Tools:** 
-Wazuh Manager/Dashboard for centralized monitoring | Wazuh Agents for endpoint collection | Microsoft Sysmon for deeper telemetry | SSH/PowerShell for deployment | VirtualBox for lab environment.
+- **Tools:**
+  - Wazuh Manager — for centralized telemetry collection
+  - Microsoft Sysmon — enhanced deep Windows endpoint telemetry
+  - SSH/PowerShell — deployment and system administration
+  - VirtualBox — controlled lab environment
 
 - **Steps:**
 
