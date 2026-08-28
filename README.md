@@ -1,7 +1,6 @@
 # WAZUH SOC LAB
 
 ## Overview
-
 This project builds an on-premises Wazuh SIEM to develop SOC analyst skills through centralized monitoring of Windows and Linux endpoints. It integrates with the **DeleDFIR.local Active Directory** domain and Ubuntu systems to generate and analyze security telemetry. The lab covers Wazuh server and dashboard deployment, telemetry validation, custom detection rules, File Integrity Monitoring, Active Response, and full security investigations. Designed as a repeatable SOC environment, it can be extended with detections, threat simulations, investigations, and automation using **Tines, AI, Slack, and human-approved blocking workflows**.
 
 ---
@@ -9,15 +8,12 @@ This project builds an on-premises Wazuh SIEM to develop SOC analyst skills thro
 # PART 1 — Wazuh SIEM Deployment & Archive Telemetry
 
 ## Objective
-
 Deploy and configure Wazuh as the centralized SIEM for the existing DeleDFIR.local lab to establish reliable security telemetry collection and investigation visibility.
 
 ## Scope & Assumptions
-
 This is a controlled VirtualBox lab extending the existing DeleDFIR.local Active Directory environment with a dedicated Ubuntu Wazuh server at `192.168.56.120`, focused on SIEM deployment, configuration, and archive telemetry collection before endpoint integration.
 
 ## Skills
-
 - SIEM deployment & administration
 - Linux administration & troubleshooting
 - Security monitoring & telemetry validation
@@ -25,13 +21,11 @@ This is a controlled VirtualBox lab extending the existing DeleDFIR.local Active
 - Evidence-based analysis & SOC documentation
 
 ## Tools
-
 - **Wazuh** — Centralized SIEM for deploying the monitoring platform and collecting archive telemetry.
 - **Ubuntu Linux** — Hosts the Wazuh server and provides the platform for configuration and administration.
 - **VirtualBox** — Hosts the isolated Wazuh lab environment.
 - **Filebeat** — Collects and forwards Wazuh archive telemetry to the Wazuh Indexer.
 - **SSH** — Provides remote access from the host to the Wazuh server for administration.
-
 
 ## Steps
 
@@ -42,7 +36,6 @@ Configured the Wazuh server and archive telemetry pipeline to retain non-alertin
 ---
 
 ## Challenges & Troubleshooting
-
 The deployment encountered missing credentials, Filebeat configuration and certificate issues, and initially incomplete Wazuh components, with Filebeat configuration tests, service-status checks, certificate inspection, installation-file inspection, and Indexer health checks used to identify the underlying problems.
 
 The issues were resolved by retrieving the required credentials and certificates, correcting the Filebeat and Wazuh configuration, initializing the Wazuh Indexer and Dashboard components, and restarting the affected services.
@@ -56,7 +49,6 @@ The issues were resolved by retrieving the required credentials and certificates
 **Validation:** Successful Dashboard access, healthy Indexer status, operational Wazuh services, valid Filebeat configuration, and **1,663 indexed archive events** confirmed that the initial SIEM deployment and archive-collection pipeline were functioning correctly.
 
 ## Operational Impact
-
 The deployment establishes a functional centralized SIEM foundation with reliable archive telemetry, improving security visibility and providing a validated platform for subsequent endpoint monitoring and detection capabilities.
 
 ---
@@ -64,25 +56,25 @@ The deployment establishes a functional centralized SIEM foundation with reliabl
 
 # Part 2: Windows & Ubuntu Agents + Sysmon
 
-- **Objective:** 
+## **Objective:** 
 Extend centralized security monitoring by onboarding Windows and Linux endpoints and integrating Sysmon to reduce blind spots in process and network activity.
 
-- **Scope & Assumptions:** 
+## **Scope & Assumptions:** 
 Lab simulation with two Windows endpoints (DC1, WS01), 2 Ubuntu endpoints (DFIR‑Linux), and a Wazuh server from Part 1 for centralized monitoring.
 
-- **Skills:** 
+## **Skills:** 
 - SIEM administration & endpoint telemetry
 - Windows/Linux administration & security monitoring
 - Log analysis, troubleshooting & evidence validation
 - SOC documentation
 
-- **Tools:**
-  - Wazuh Manager — for centralized telemetry collection
-  - Microsoft Sysmon — enhanced deep Windows endpoint telemetry
-  - SSH/PowerShell — deployment and system administration
-  - VirtualBox — controlled lab environment
+## **Tools:**
+- Wazuh Manager — for centralized telemetry collection
+- Microsoft Sysmon — enhanced deep Windows endpoint telemetry
+- SSH/PowerShell — deployment and system administration
+- VirtualBox — controlled lab environment
 
-- **Steps:**
+## **Steps:**
 
 <img src="02_Screenshots/Wazuh_Agent_Coverage.png">
 
@@ -96,15 +88,16 @@ Lab simulation with two Windows endpoints (DC1, WS01), 2 Ubuntu endpoints (DFIR�
 
 **Telemetry Validation:** Executed `uname` on DFIR-Linux and confirmed Wazuh captured the activity as a Linux Sysmon event with `/usr/bin/uname` as the process image.
 
-- **Challenges & Troubleshooting:** 
+## **Challenges & Troubleshooting:** 
 Windows Sysmon telemetry required explicit `ossec.conf` configuration before events appeared, and restarting the Wazuh Agent resolved the issue; Linux Sysmon required installation and local log validation before telemetry was confirmed in Wazuh.
 
-- **Summary:**
-  - **Investigation Findings:** Wazuh archive confirmed telemetry from all endpoints systems—DC1, WS01, DFIR-Linux, and ubuntu-s2—with Sysmon process and network events.
-  - **Security Decision:** Sysmon was added to strengthen endpoint visibility and support deeper investigations.
-  - **Validation:** Wazuh Discover confirmed active agent coverage and successful Sysmon telemetry, including the captured Linux `uname` execution.
+## **Summary:**
 
-- **Operational Impact:** 
+- **Investigation Findings:** Wazuh archive confirmed telemetry from all endpoints systems—DC1, WS01, DFIR-Linux, and ubuntu-s2—with Sysmon process and network events.
+- **Security Decision:** Sysmon was added to strengthen endpoint visibility and support deeper investigations.
+- **Validation:** Wazuh Discover confirmed active agent coverage and successful Sysmon telemetry, including the captured Linux `uname` execution.
+
+## **Operational Impact:** 
 Centralized Sysmon telemetry improved endpoint visibility and strengthened incident-response readiness.
 
 ---
