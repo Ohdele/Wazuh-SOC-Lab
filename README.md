@@ -245,7 +245,7 @@ Extended DeleDFIR.local Wazuh SOC lab to monitor both Windows WS01 and Linux end
 - Windows & Linux security monitoring
 - Security event analysis and investigation
 
-Tools:
+## Tools:
 - Wazuh — centralized SIEM, FIM, event investigation, and custom detection.
 - Windows WS01 — generated controlled file and account-management activity.
 - Ubuntu/Linux endpoint — provided Linux FIM telemetry.
@@ -276,9 +276,8 @@ Tools:
 - The custom rule was corrected to use the decoded `win.system.eventID` field, align with the relevant built-in rule groups, and use the appropriate `if_sid` condition before reloading and retesting successfully.
 
 ## Summary
-
 Wazuh evidence confirmed FIM events for monitored file changes and deletions, as well as Windows Event ID 4722 for Guest-account enablement; comparison with rule `60109` explained why the initial custom detection did not trigger, leading to the refinement and successful validation of rule `100200` for targeted Guest-account monitoring. Controlled tests validated both Windows and Linux FIM and confirmed that the custom rule generated the alert *MYDFIR-Dele Windows Guest account was enabled*, demonstrating effective visibility and precise detection.
 
-Operational Impact:
-- Enhanced SOC visibility by combining file‑integrity monitoring with a custom detection rule for Guest‑account enablement. Beyond visibility, the custom rule demonstrates the ability to tailor detections to specific risks, ensuring that high‑impact account‑management changes are surfaced with precision and reducing the chance of unauthorized activity going unnoticed.
+## Operational Impact:
+Enhanced SOC visibility by combining file‑integrity monitoring with a custom detection rule for Guest‑account enablement. Beyond visibility, the custom rule demonstrates the ability to tailor detections to specific risks, ensuring that high‑impact account‑management changes are surfaced with precision and reducing the chance of unauthorized activity going unnoticed.
 
