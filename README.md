@@ -177,3 +177,52 @@ During the Linux investigation, SSH telemetry was initially searched against the
 ## Operational Impact
 
 The investigation improved centralized security visibility by enabling analysts to audit and trace account changes, authentication activity, privilege changes, and SSH sessions from correlated endpoint telemetry.
+
+---
+
+
+# PART 4 — SOC Dashboard
+
+## Objective
+Transform existing Wazuh telemetry into a centralized SOC dashboard that provides a concise operational view of failed Windows logons, Windows account changes overtime and Linux SSH failed authentication activity.
+
+## Scope & Assumptions
+This is a controlled VirtualBox lab extending the existing DeleDFIR.local environment, using Wazuh archives and telemetry from the existing Windows and Linux systems.
+
+## Skills
+* SIEM dashboard development & visualization
+* Windows/Linux event analysis
+* Telemetry validation & SOC reporting
+
+## Tools
+- **Wazuh Dashboard** — Centralized visualization and monitoring of security telemetry.
+- **Wazuh Discover** — Searching and validating archived Windows/Linux security events.
+- **Wazuh archives** — Source of retained endpoint telemetry used by the dashboard panels.
+- **Windows Event Logs** — Provided authentication and account-management activity for dashboard analysis.
+
+## Steps
+
+<img src="04_Screenshots/Dashboard_Deliverables.png">
+
+**### Failed Windows Logon:** Created a Metric visualization using `data.win.system.eventID:4625` to display the count of failed Windows logon activity.
+
+**### Windows Account Changes Over Time:** Created a Line visualization using Windows account-management Event IDs `4720`, `4722`, `4723`, `4724`, `4725`, `4726`, `4732`, `4733`, and `4738`, with `timestamp` as the date histogram, Count as the metric, and `data.win.system.eventID` as the split series.
+
+**### Linux Failed SSH Authentication Activity:** Created a Data Table using the `wazuh-archives` data view, filtered to the `DFIR-Linux` agent and `"failed password"` activity, then added `agent.name`, `timestamp`, `data.source.user`, `data.dst.user`, and `data.source.ip` as table buckets; enabled **Show missing values** for the destination user field.
+
+**### Dashboard Integration:** Saved the Windows account-change visualization as `Windows Account Changes Over Time` and added the saved visualization to `MYDFIR-Dele Basic SOC Activity Overview`.
+
+## Challenges & Troubleshooting
+The `data.win.system.eventID` field was initially unavailable for Split series because the `wazuh-archives` index pattern had not refreshed its field mappings.
+
+The field list was refreshed through Dashboard Management → Index Patterns → `wazuh-archives`, after which the Event ID field became available and the visualization displayed separate event-ID series.
+
+## Summary
+**Investigation Findings:** Wazuh Discover confirmed WS01 Windows Security telemetry including Event IDs `4720`, `4722`, `4724`, `4725`, and `4738`, providing the evidence used to build the account-management dashboard visualization.
+
+**Investigation Rationale:** Panel-level queries were used so each visualization could focus on its specific security activity without one dashboard-level query filtering the other panels.
+
+**Validation:** The required Windows events were confirmed in Wazuh Discover, the Event ID field was successfully mapped, and the dashboard displayed the account-management activity as separate event-ID series.
+
+## Operational Impact
+The dashboard provides a centralized operational view of authentication and account-management activity, improving SOC visibility and making relevant security activity easier to identify and investigate.
