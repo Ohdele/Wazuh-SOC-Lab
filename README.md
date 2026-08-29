@@ -150,7 +150,7 @@ Interpreted **Event ID 4732** as a member being added to a security-enabled loca
 
 ### Linux SSH Authentication
 
-<img src="03_Screenshots/SSH_Session_opened.png">
+<img src="03_Screenshots/SSH_session_opened.png">
 
 Identified a **connection reset by invalid user** for `fakeuser` from 192.168.56.1  on port `52603`, identified a **failed password attempt** for fakeuser from the same source IP and port, searched for `dfir AND accepted` and identified a successful SSH authentication for **`dfir`** from 192.168.56.1 on port **`52395`**, and interpreted the **Accepted password** event as successful authentication.
 
