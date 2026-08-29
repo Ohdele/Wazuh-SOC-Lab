@@ -226,3 +226,59 @@ The field list was refreshed through Dashboard Management → Index Patterns →
 
 ## Operational Impact
 The dashboard provides a centralized operational view of authentication and account-management activity, improving SOC visibility and making relevant security activity easier to identify and investigate.
+
+---
+
+
+# PART 5 — File Integrity Monitoring & Custom Detection Rules
+
+## Objective:
+Strengthen SOC visibility by detecting file creation, modification, and deletion activity, while also creating a targeted alert for Guest‑account enablement. This reduces the risk of unauthorized changes going unnoticed and ensures that critical account activity is surfaced quickly for investigation.
+
+## Scope & Assumptions:
+Extended DeleDFIR.local Wazuh SOC lab to monitor both Windows WS01 and Linux endpoints. All activity was performed as a controlled security simulation to ensure that the telemetry captured could be validated against expected outcomes.
+
+## Skills:
+- SIEM monitoring
+- File Integrity Monitoring (FIM)
+- Detection engineering & validation
+- Windows & Linux security monitoring
+- Security event analysis and investigation
+
+Tools:
+- Wazuh — centralized SIEM, FIM, event investigation, and custom detection.
+- Windows WS01 — generated controlled file and account-management activity.
+- Ubuntu/Linux endpoint — provided Linux FIM telemetry.
+- Wazuh Dashboard/Discover — investigated archived telemetry and validated detection results.
+
+## Steps:
+
+- Configured real‑time File Integrity Monitoring (FIM) on WS01 to track changes in `C:\company data` detecting file creation, modification, and deletion.
+
+<img src="05_Screenshots/FIM-ON-WS01.png">
+
+- Performed controlled modifications and deletions on the monitored Windows file and confirmed the resulting FIM events in Wazuh.
+
+<img src="05_Screenshots/FIM-ON-LINUX.png">
+
+- Configured real-time FIM on the Linux endpoint for `/opt/company-data` and validated file modification and deletion events.
+
+- Disabled the local Guest account on WS01 to establish the baseline for account‑enable detection. Queried Wazuh Archives for Guest account enablement using Event ID 4722 and confirmed WS01 telemetry.
+
+- Created custom Wazuh rule `100200` to specifically detect Guest account enablement, providing more focused coverage than the built‑in account‑management rule. Reloaded the rules and enabled the Guest account on WS01 to generate controlled test telemetry.
+
+<img src="05_Screenshots/Deliverable-Custom-Guest-Rule.png">
+
+- Validated the custom detection by confirming rule `100200` generated the `MYDFIR-Dele Windows Guest account was enabled` alert.
+
+## Challenges & Troubleshooting:
+- Rule `100200` initially failed to trigger while Wazuh's built-in rule `60109` detected the same Guest-account enablement event, so the decoded event and built-in rule definition were reviewed.
+- The custom rule was corrected to use the decoded `win.system.eventID` field, align with the relevant built-in rule groups, and use the appropriate `if_sid` condition before reloading and retesting successfully.
+
+## Summary
+
+Wazuh evidence confirmed FIM events for monitored file changes and deletions, as well as Windows Event ID 4722 for Guest-account enablement; comparison with rule `60109` explained why the initial custom detection did not trigger, leading to the refinement and successful validation of rule `100200` for targeted Guest-account monitoring. Controlled tests validated both Windows and Linux FIM and confirmed that the custom rule generated the alert *MYDFIR-Dele Windows Guest account was enabled*, demonstrating effective visibility and precise detection.
+
+Operational Impact:
+- Enhanced SOC visibility by combining file‑integrity monitoring with a custom detection rule for Guest‑account enablement. Beyond visibility, the custom rule demonstrates the ability to tailor detections to specific risks, ensuring that high‑impact account‑management changes are surfaced with precision and reducing the chance of unauthorized activity going unnoticed.
+
