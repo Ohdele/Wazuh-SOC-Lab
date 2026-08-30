@@ -48,7 +48,7 @@
 
 <group name="local, syslog, sshd, authentication_failed">
   <rule id="100101" level="10" frequency="3" timeframe="120">
-    <if_matched_sid>5768</if_matched_sid>
+    <if_matched_sid>5760</if_matched_sid>
     <same_source_ip/>
     <description>Multiple SSH login failures observed from the same source IP</description>
     <mitre>

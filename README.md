@@ -131,28 +131,28 @@ Conducted in a controlled lab using the existing **DeleDFIR.local Active Directo
 ### Event ID 4726 — Account Deletion
 <img src="03_Screenshots/WS01_4726.png">
 
-The **Subject**, identified by **RID 500**, was the Administrator account that executed the action, while the **Target Account**, identified by **RID 1012**, was the `student1` account. By parsing the **Subject SID** and correlating the RID, I confirmed the actor as **Administrator**. I then correlated this event with the controlled deletion of `student1` on WS01 in the **DELEDFIR domain**, validating that the activity matched the expected lab simulation.
+The **Subject**, identified by **RID 500**, was the Administrator account that executed the action, while the *Target Account*, identified by **RID 1012**, was the `student1` account. By parsing the *Subject SID* and correlating the RID, I confirmed the actor as *Administrator*. I then correlated this event with the controlled deletion of `student1` on WS01 in the *DELEDFIR domain*, validating that the activity matched the expected lab simulation.
 
 ### Event ID 4720 — Account Creation
 <img src="03_Screenshots/WS01_4720.png">
 
-Interpreted **Event ID 4720** as a user-account creation event, identified the **Subject (RID 500)** as the account that performed the action and the **New Account (RID 1012)** as the account created, parsed the **Subject SID** and used the RID to identify the **Administrator account**, reviewed the account attributes including Primary Group ID `513` as **Domain Users** and New UAC Value `0x15` as indicating Account Disabled, Password Not Required, and Normal Account, and correlated the event with the controlled `student1` account creation performed on WS01 in the **DELEDFIR domain**.
+Interpreted **Event ID 4720** as a user-account creation event, identified the *Subject (RID 500)* as the account that performed the action and the *New Account (RID 1012)* as the account created, parsed the **Subject SID** and used the RID to identify the **Administrator account**, reviewed the account attributes including Primary Group ID `513` as **Domain Users** and New UAC Value `0x15` as indicating Account Disabled, Password Not Required, and Normal Account, and correlated the event with the controlled `student1` account creation performed on WS01 in the *DELEDFIR domain*.
 
 ### Event ID 4624 — Successful Logon
 <img src="03_Screenshots/WS01_4624.png">
 
-Interpreted **Event ID 4624** as a successful user logon, identified the New Logon account as **`DELEDFIR\john.smith`** and **RID 1239** as the relative identifier at the end of the account SID, identified Logon Type `7` as a re-logon/unlock event, reviewed Logon ID `0x87E1C9` as a correlation point for the logon session, identified **`lsass.exe`** as the process handling the authentication and Negotiate as the authentication package, and correlated the logon with WS01 and the **DELEDFIR domain**.
+Interpreted *Event ID 4624* as a successful user logon, identified the New Logon account as `DELEDFIR\john.smith` and **RID 1239** as the relative identifier at the end of the account SID, identified Logon Type `7` as a re-logon/unlock event, reviewed Logon ID `0x87E1C9` as a correlation point for the logon session, identified `lsass.exe` as the process handling the authentication and Negotiate as the authentication package, and correlated the logon with WS01 and the *DELEDFIR domain*.
 
 ### Event ID 4732 — Local Group Membership
 <img src="03_Screenshots/WS01_4732.png">
 
-Interpreted **Event ID 4732** as a member being added to a security-enabled local group, identified the **Subject (RID 500)** as the account that performed the action and the **Member (RID 1012)** as the account added, used the **Member SID/RID** to identify the affected account as **`student1`** because the Member **Account Name** field was not populated, identified the target local group as Users in the Builtin domain, and correlated the event with the controlled `student1` group-membership change performed on WS01 by `DELEDFIR\Administrator`.
+Interpreted **Event ID 4732** as a member being added to a security-enabled local group, identified the *Subject (RID 500)* as the account that performed the action and the **Member (RID 1012)** as the account added, used the **Member SID/RID** to identify the affected account as **`student1`** because the Member **Account Name** field was not populated, identified the target local group as Users in the Builtin domain, and correlated the event with the controlled `student1` group-membership change performed on WS01 by `DELEDFIR\Administrator`.
 
 ### Linux SSH Authentication
 
 <img src="03_Screenshots/SSH_session_opened.png">
 
-Identified a **connection reset by invalid user** for `fakeuser` from 192.168.56.1  on port `52603`, identified a **failed password attempt** for fakeuser from the same source IP and port, searched for `dfir AND accepted` and identified a successful SSH authentication for **`dfir`** from 192.168.56.1 on port **`52395`**, and interpreted the **Accepted password** event as successful authentication.
+Identified a *connection reset by invalid user* for `fakeuser` from 192.168.56.1  on port `52603`, identified a *failed password attempt* for fakeuser from the same source IP and port, searched for `dfir AND accepted` and identified a successful SSH authentication for **`dfir`** from 192.168.56.1 on port **`52395`**, and interpreted the **Accepted password** event as successful authentication.
 
 ### Linux SSH Session Lifecycle
 
@@ -208,7 +208,7 @@ This is a controlled VirtualBox lab extending the existing DeleDFIR.local enviro
 
 **### Windows Account Changes Over Time:** Created a Line visualization using Windows account-management Event IDs `4720`, `4722`, `4723`, `4724`, `4725`, `4726`, `4732`, `4733`, and `4738`, with `timestamp` as the date histogram, Count as the metric, and `data.win.system.eventID` as the split series.
 
-**### Linux Failed SSH Authentication Activity:** Created a Data Table using the `wazuh-archives` data view, filtered to the `DFIR-Linux` agent and `"failed password"` activity, then added `agent.name`, `timestamp`, `data.source.user`, `data.dst.user`, and `data.source.ip` as table buckets; enabled **Show missing values** for the destination user field.
+**### Linux Failed SSH Authentication Activity:** Created a Data Table using the `wazuh-archives` data view, filtered to the `DFIR-Linux` agent and `failed password` activity, then added `agent.name`, `timestamp`, `data.source.user`, `data.dst.user`, and `data.source.ip` as table buckets; enabled **Show missing values** for the destination user field.
 
 **### Dashboard Integration:** Saved the Windows account-change visualization as `Windows Account Changes Over Time` and added the saved visualization to `MYDFIR-Dele Basic SOC Activity Overview`.
 
@@ -236,7 +236,7 @@ The dashboard provides a centralized operational view of authentication and acco
 Strengthen SOC visibility by detecting file creation, modification, and deletion activity, while also creating a targeted alert for Guest‑account enablement. This reduces the risk of unauthorized changes going unnoticed and ensures that critical account activity is surfaced quickly for investigation.
 
 ## Scope & Assumptions:
-Extended DeleDFIR.local Wazuh SOC lab to monitor both Windows WS01 and Linux endpoints. All activity was performed as a controlled security simulation to ensure that the telemetry captured could be validated against expected outcomes.
+Extended *DeleDFIR.local* Wazuh SOC lab to monitor both Windows WS01 and Linux endpoints. All activity was performed as a controlled security simulation to ensure that the telemetry captured could be validated against expected outcomes.
 
 ## Skills:
 - SIEM monitoring
@@ -252,6 +252,8 @@ Extended DeleDFIR.local Wazuh SOC lab to monitor both Windows WS01 and Linux end
 - Wazuh Dashboard/Discover — investigated archived telemetry and validated detection results.
 
 ## Steps:
+
+[View Wazuh Custom Detection Rules](./rules/local_rules.xml)
 
 - Configured real‑time File Integrity Monitoring (FIM) on WS01 to track changes in `C:\company data` detecting file creation, modification, and deletion.
 
@@ -276,8 +278,54 @@ Extended DeleDFIR.local Wazuh SOC lab to monitor both Windows WS01 and Linux end
 - The custom rule was corrected to use the decoded `win.system.eventID` field, align with the relevant built-in rule groups, and use the appropriate `if_sid` condition before reloading and retesting successfully.
 
 ## Summary
-Wazuh evidence confirmed FIM events for monitored file changes and deletions, as well as Windows Event ID 4722 for Guest-account enablement; comparison with rule `60109` explained why the initial custom detection did not trigger, leading to the refinement and successful validation of rule `100200` for targeted Guest-account monitoring. Controlled tests validated both Windows and Linux FIM and confirmed that the custom rule generated the alert *MYDFIR-Dele Windows Guest account was enabled*, demonstrating effective visibility and precise detection.
+Wazuh evidence confirmed FIM events for monitored file changes and deletions, as well as Windows Event `ID 4722` for Guest-account enablement; comparison with rule `60109` explained why the initial custom detection did not trigger, leading to the refinement and successful validation of rule `100200` for targeted Guest-account monitoring. Controlled tests validated both Windows and Linux FIM and confirmed that the custom rule generated the alert *MYDFIR-Dele Windows Guest account was enabled*, demonstrating effective visibility and precise detection.
 
 ## Operational Impact:
 Enhanced SOC visibility by combining file‑integrity monitoring with a custom detection rule for Guest‑account enablement. Beyond visibility, the custom rule demonstrates the ability to tailor detections to specific risks, ensuring that high‑impact account‑management changes are surfaced with precision and reducing the chance of unauthorized activity going unnoticed.
 
+---
+
+
+# Part 6 — Active Response
+
+## Objective: 
+Detect repeated SSH authentication failures and automatically block the offending source to reduce the risk of brute-force access against the Linux server.
+
+## Scope & Assumptions: 
+Controlled Wazuh SOC lab using the existing Ubuntu Wazuh server and Windows host, with Active Response configured and tested only within the isolated lab environment to ensure that blocking actions were safe, repeatable, and did not affect production systems.
+
+## Skills: 
+SIEM monitoring & event analysis, detection engineering & validation, Active Response automation, Linux & firewall administration, and evidence‑based security investigation.
+
+## Tools: 
+Wazuh was used for centralized monitoring, custom detection rules, alerting, and Active Response. The Ubuntu Linux server and iptables provided firewall enforcement and validation, while Windows PowerShell and SSH supported controlled attack simulation and connectivity testing.
+
+## Steps:
+
+[View Wazuh Custom Detection Rules](./rules/local_rules.xml)
+
+
+<img src="ssh-bruteforce-detection.png">
+
+Created and validated a custom Wazuh rule that detects three failed SSH login attempts within 120 seconds, providing visibility into potential brute-force activity.
+
+Configured Wazuh Active Response to automatically execute firewall-drop when custom rule `100101` is triggered, blocking the identified source IP.
+
+<img src="active-response-firewall-block.png">
+
+Validated automated containment by confirming the Windows host lost connectivity after the SSH brute-force threshold was reached and Wazuh generated Rule `651`, *Host Blocked by firewall-drop Active Response.*
+
+<img src="active-response-connectivity-restored.png">
+
+Removed the temporary `firewall-drop` rules after testing and verified that connectivity from the Windows host to the Wazuh server was restored.
+
+## Challenges & Troubleshooting: 
+The custom detection initially referenced rule `5768` instead of the actual SSH authentication-failure rule `5760`, which was identified by reviewing Wazuh event data and resolved by correcting the parent rule reference and reloading Wazuh. 
+
+Active Response successfully blocked the Windows source, but rule `651` was not visible in Discover. To confirm execution, both active‑responses.log and alerts.log were reviewed, verifying that the alert had been generated as expected.
+
+## Summary:
+Wazuh evidence confirmed *three failed SSH authentication* attempts from `192.168.56.1`, which triggered custom rule `100101`. This was followed by `firewall‑drop` execution and rule `651`, verifying that the source was blocked. A `firewall‑drop` was chosen as the automated response because repeated SSH failures indicated potential brute‑force activity requiring immediate containment. Validation was completed by confirming the SSH connection timed out, verifying the DROP rule in `iptables`, and reviewing *active‑responses.log and alerts.log*. Connectivity was then restored by removing the temporary rules, demonstrating that the Active Response worked as intended in a controlled lab environment.
+
+## Operational Impact: 
+Automated detection and containment reduced response time to repeated SSH authentication attacks by immediately blocking the offending source. This demonstrated how the SOC lab can move beyond passive monitoring into automated defense, ensuring brute‑force attempts are contained quickly while still allowing controlled recovery without leaving the lab environment blocked.
