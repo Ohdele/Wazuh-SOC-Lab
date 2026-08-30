@@ -305,17 +305,17 @@ Wazuh was used for centralized monitoring, custom detection rules, alerting, and
 [View Wazuh Custom Detection Rules](./rules/local_rules.xml)
 
 
-<img src="ssh-bruteforce-detection.png">
+<img src="06_Screenshots/ssh-bruteforce-detection.png">
 
 Created and validated a custom Wazuh rule that detects three failed SSH login attempts within 120 seconds, providing visibility into potential brute-force activity.
 
 Configured Wazuh Active Response to automatically execute firewall-drop when custom rule `100101` is triggered, blocking the identified source IP.
 
-<img src="active-response-firewall-block.png">
+<img src="06_Screenshots/active-response-firewall-block.png">
 
 Validated automated containment by confirming the Windows host lost connectivity after the SSH brute-force threshold was reached and Wazuh generated Rule `651`, *Host Blocked by firewall-drop Active Response.*
 
-<img src="active-response-connectivity-restored.png">
+<img src="06_Screenshots/active-response-connectivity-restored.png">
 
 Removed the temporary `firewall-drop` rules after testing and verified that connectivity from the Windows host to the Wazuh server was restored.
 
