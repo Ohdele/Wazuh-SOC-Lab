@@ -1,0 +1,55 @@
+<!-- PART 5: Wazuh SOC Lab — Custom/Project-Specific Configuration Changes -->
+
+<!-- ========================================================= -->
+<!-- WAZUH SERVER — ubuntu-s2 / 192.168.56.120 -->
+<!-- ========================================================= -->
+
+<!-- Enable Wazuh archive collection -->
+<global>
+  <logall>yes</logall>
+  <logall_json>yes</logall_json>
+</global>
+
+<!-- Active Response — firewall-drop for SSH brute-force rule -->
+<active-response>
+  <disabled>no</disabled>
+  <command>firewall-drop</command>
+  <location>local</location>
+  <rules_id>100101</rules_id>
+</active-response>
+
+
+<!-- ========================================================= -->
+<!-- DC1 — 192.168.56.110 -->
+<!-- ========================================================= -->
+
+<!-- No change explicitly confirmed -->
+
+
+<!-- ========================================================= -->
+<!-- WS01 — 192.168.56.102 -->
+<!-- ========================================================= -->
+
+<!-- Real-time File Integrity Monitoring -->
+<syscheck>
+  <directories realtime="yes">C:\company data</directories>
+</syscheck>
+
+
+<!-- ========================================================= -->
+<!-- DFIR-Linux — 192.168.56.121 -->
+<!-- ========================================================= -->
+
+<!-- Real-time File Integrity Monitoring -->
+<syscheck>
+  <directories realtime="yes">/opt/company-data</directories>
+</syscheck>
+
+
+<!-- ========================================================= -->
+<!-- Part 1: FILEBEAT — /etc/filebeat/filebeat.yml -->
+<!-- ========================================================= -->
+
+# Wazuh archives fileset
+archives:
+  enabled: true

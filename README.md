@@ -175,7 +175,7 @@ During the Linux investigation, SSH telemetry was initially searched against the
 
 **Investigation Rationale:** Wazuh was used as the central investigation point because correlating endpoint authentication, account-management, group-membership, session and command telemetry provides a single evidence trail for identifying potentially unauthorized activity.
 
-**Validation:** Repeating the controlled activities after correcting the Windows audit configuration and Linux endpoint targeting confirmed that Wazuh captured the expected telemetry, including *Windows Events 4720, 4726, 4624, 4732 and Linux SSH authentication/session events*.
+**Validation:** Repeating the controlled activities after correcting the Windows audit configuration and Linux endpoint targeting confirmed that Wazuh captured the expected telemetry, including Windows Events `4720, 4726, 4624, 4732` and Linux SSH authentication/session events.
 
 ## Operational Impact
 The investigation enabled analysts to trace Windows account creation/deletion, successful logons, local-group membership and associated privilege changes, Linux SSH authentication and session activity through centralized Wazuh telemetry.
@@ -208,7 +208,7 @@ This is a controlled VirtualBox lab extending the existing DeleDFIR.local enviro
 
 **### Failed Windows Logon:** Created a Metric visualization using `data.win.system.eventID:4625` to display the count of failed Windows logon activity.
 
-**### Windows Account Changes Over Time:** Created a Line visualization using Windows account-management Event IDs *4720, 4722, 4723, 4724, 4725, 4726, 4732, 4733 and 4738*, with `timestamp` as the date histogram, `Count` as the metric and `data.win.system.eventID` as the split series.
+**### Windows Account Changes Over Time:** Created a Line visualization using Windows account-management Event IDs `4720, 4722, 4723, 4724, 4725, 4726, 4732, 4733 and 4738`, with `timestamp` as the date histogram, `Count` as the metric and `data.win.system.eventID` as the split series.
 
 **### Linux Failed SSH Authentication Activity:** Created a Data Table using the *wazuh-archives* data view, filtered to the *DFIR-Linux agent and failed password activity*, then added `agent.name`, `timestamp`, `data.source.user`, `data.dst.user` and `data.source.ip` as table buckets; enabled *Show missing values* for the destination user field.
 
@@ -220,7 +220,7 @@ The *data.win.system.eventID* field was initially unavailable for Split series b
 The field list was refreshed through Dashboard Management → Index Patterns → `wazuh-archives`, after which the Event ID field became available and the visualization displayed separate event-ID series.
 
 ## Summary
-**Investigation Findings:** Wazuh Discover confirmed WS01 Windows Security telemetry including *Event IDs 4720, 4722, 4724, 4725 and 4738*, providing the evidence used to build the account-management dashboard visualization.
+**Investigation Findings:** Wazuh Discover confirmed WS01 Windows Security telemetry including Event IDs `4720`, `4722`, `4724`, `4725` and `4738`, providing the evidence used to build the account-management dashboard visualization.
 
 **Investigation Rationale:** Panel-level queries were used so each visualization could focus on its specific security activity without one dashboard-level query filtering the other panels.
 
@@ -254,6 +254,8 @@ Extended *DeleDFIR.local* Wazuh SOC lab to monitor both Windows and Linux endpoi
 - Wazuh Dashboard/Discover — investigated archived telemetry and validated detection results.
 
 ## Steps:
+
+[View Wazuh Agent & Manager Configurations](./configs/ossec-configs.xml)
 
 [View Wazuh Custom Detection Rules](./rules/local_rules.xml)
 
